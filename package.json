@@ -1,0 +1,9 @@
+{
+    "name": "promisejs",
+    "version": "1.0.0",
+    "main": "promise.js",
+    "devDependencies": {
+        "smoosh": "0.4.0"
+    }
+}
+
