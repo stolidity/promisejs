@@ -188,6 +188,57 @@ function test_ajax_timeout () {
         });
 }
 
+function helper_make_xhr_call(httpStatus, responseText) {
+    var realXMLHttpRequest = window.XMLHttpRequest;
+
+    window.XMLHttpRequest = function () {
+        this.readyState = 4;
+        this.status = httpStatus;
+        this.responseText = responseText;
+        this.open = function () {};
+        this.setRequestHeader = function () {};
+        this.onreadystatechange = function () {};
+        var self = this;
+        this.send = function () {
+            self.onreadystatechange();
+        };
+    };
+}
+
+
+function test_decode_json_success() {
+    helper_make_xhr_call(200, '{ "foo": "bar" }');
+
+    promise.get('/', {}, {
+        Accept: 'application/json'
+    }).then(
+        function(err, response){
+            assert(response.foo === 'bar', 'Response must decode valid JSON');
+        });
+}
+
+function test_decode_json_failure() {
+    helper_make_xhr_call(404, '{ "failure": "not found" }');
+
+    promise.get('/', {}, {
+        Accept: 'application/json'
+    }).then(
+        function(err, response){
+            assert(response.failure === 'not found', 'Response must decode valid JSON for failed request');
+        });
+}
+
+function test_decode_json_invalid() {
+    helper_make_xhr_call(200, '{ "invalid json": NaN, oh no }');
+
+    promise.get('/', {}, {
+        Accept: 'application/json'
+    }).then(
+        function(err, response){
+            assert(err === promise.EDECODEJSON, 'Response must fail with invalid JSON');
+        });
+}
+
 
 function test() {
     test_simple_synchronous();
@@ -198,4 +249,7 @@ function test() {
     test_then_then();
     test_chain();
     test_ajax_timeout();
+    test_decode_json_success();
+    test_decode_json_failure();
+    test_decode_json_invalid();
 }

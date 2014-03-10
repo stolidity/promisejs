@@ -157,8 +157,18 @@
             if (xhr.readyState === 4) {
                 var err = (!xhr.status ||
                            (xhr.status < 200 || xhr.status >= 300) &&
-                           xhr.status !== 304);
-                p.done(err, xhr.responseText, xhr);
+                           xhr.status !== 304),
+                    response = xhr.responseText;
+
+                if ((xhr.getResponseHeader('Content-Type') || '').indexOf('json') > -1) {
+                    try {
+                        response = JSON.parse(response);
+                    } catch (e) {
+                        err = promise.EDECODEJSON;
+                    }
+                }
+
+                p.done(err, response, xhr);
             }
         };
 
@@ -185,6 +195,7 @@
         /* Error codes */
         ENOXHR: 1,
         ETIMEOUT: 2,
+        EDECODEJSON: 3,
 
         /**
          * Configuration parameter: time in milliseconds after which a
