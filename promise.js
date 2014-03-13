@@ -89,15 +89,15 @@
         } else {
             var e = encodeURIComponent;
             var tmp = [];
-            
+
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
                     tmp.push( e(k) + '=' + e(data[k]) );
                 }
             }
-            
+
             result = tmp.join('&')
-            
+
         }
         return result;
     }
@@ -117,11 +117,12 @@
     }
 
 
-    function ajax(method, url, data, headers) {
+    function ajax(method, url, data, headers, options) {
         var p = new Promise();
         var xhr, payload;
         data = data || {};
         headers = headers || {};
+        options = options || {};
 
         try {
             xhr = new_xhr();
@@ -142,6 +143,12 @@
         for (var h in headers) {
             if (headers.hasOwnProperty(h)) {
                 xhr.setRequestHeader(h, headers[h]);
+            }
+        }
+
+        for (var o in options) {
+            if (options.hasOwnProperty(o)) {
+                xhr[o] = options[o];
             }
         }
 
@@ -182,8 +189,8 @@
     }
 
     function _ajaxer(method) {
-        return function(url, data, headers) {
-            return ajax(method, url, data, headers);
+        return function(url, data, headers, options) {
+            return ajax(method, url, data, headers, options);
         };
     }
 
