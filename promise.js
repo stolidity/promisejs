@@ -147,7 +147,7 @@
         }
 
         for (var o in options) {
-            if (options.hasOwnProperty(o)) {
+            if (o !== 'beforeSend' && options.hasOwnProperty(o)) {
                 xhr[o] = options[o];
             }
         }
@@ -183,6 +183,10 @@
                 p.done(err, response, xhr);
             }
         };
+
+        if (options.beforeSend) {
+            options.beforeSend(xhr);
+        }
 
         xhr.send(payload);
         return p;

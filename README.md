@@ -45,7 +45,7 @@ function callback(error, result) {
         ...
         return;
     }
-       
+
     /* Deal with normal case. */
     ...
 }
@@ -126,7 +126,7 @@ promise.chain([
 
     promise.join([p1, p2, p3, ...]);
 
-`promise.join()` expects an array of `Promise` object and returns a `Promise` that will be resolved once all the arguments have been resolved. The callback will be passed an array containing the values passed by each promise, in the same order that the promises were given. 
+`promise.join()` expects an array of `Promise` object and returns a `Promise` that will be resolved once all the arguments have been resolved. The callback will be passed an array containing the values passed by each promise, in the same order that the promises were given.
 
 **Example**:
 
@@ -156,15 +156,18 @@ promise.join([
 Because AJAX requests are the root of much asynchrony in Javascript, promise.js provides the following functions:
 
 ```js
-promise.get(url, data, headers)
-promise.post(url, data, headers)
-promise.put(url, data, headers)
-promise.del(url, data, headers)
+promise.get(url, data, headers. options)
+promise.post(url, data, headers, options)
+promise.put(url, data, headers, options)
+promise.del(url, data, headers, options)
 ```
 
 `data` *(optional)* : a {key: value} object or url-encoded string.
 
 `headers` *(optional)* :  a {key: value} object (e.g. `{"Accept": "application/json"}`).
+
+`options` *(optional)* : a {key: value} object of options to set on the XHR object.
+If the special option `beforeSend` is passed, it will be called with the XHR object before sending the request.
 
 **Example**:
 
