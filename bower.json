@@ -1,23 +1,23 @@
-+{
-+  "name": "promisejs",
-+  "version": "1.0.0",
-+  "homepage": "https://github.com/stolidity/promisejs",
-+  "authors": [
-+    "Brian Wilhite <stolidity@gmail.com>"
-+  ],
-+  "description": "Lighweight AJAX library",
-+  "main": "promise.js",
-+  "keywords": [
-+    "ajax"
-+  ],
-+  "license": "MIT",
-+  "private": true,
-+  "ignore": [
-+    "**/.*",
-+    "node_modules",
-+    "bower_components",
-+    "src/components",
-+    "test",
-+    "tests"
-+  ]
-+}
+{
+  "name": "promisejs",
+  "version": "1.0.0",
+  "homepage": "https://github.com/stolidity/promisejs",
+  "authors": [
+    "Brian Wilhite <stolidity@gmail.com>"
+  ],
+  "description": "Lighweight AJAX library",
+  "main": "promise.js",
+  "keywords": [
+   "ajax"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/components",
+    "test",
+    "tests"
+  ]
+}
